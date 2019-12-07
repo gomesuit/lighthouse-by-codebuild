@@ -6,7 +6,21 @@ phases:
     runtime-versions:
       docker: 18
     commands:
-      - npm i -g lighthouse
+      - apt-get install -y language-pack-ja-base language-pack-ja
+      - apt-get install -y fonts-ipafont-gothic fonts-ipafont-mincho
+      - npm i -g lighthouse@5.6.0
+  pre_build:
+    commands:
+      - OUTPUT_DATE="$(date +'%Y/%m/%d/%H/%M')"
+      - YEAR="$(echo $OUTPUT_DATE | awk -F/ '{print $1}')"
+      - MONTH="$(echo $OUTPUT_DATE | awk -F/ '{print $2}')"
+      - DAY="$(echo $OUTPUT_DATE | awk -F/ '{print $3}')"
+      - HOUR="$(echo $OUTPUT_DATE | awk -F/ '{print $4}')"
+      - MINUTE="$(echo $OUTPUT_DATE | awk -F/ '{print $5}')"
   build:
     commands:
-      - lighthouse --port=9222 --chrome-flags="--headless" https://example.com
+      - ./buildspec_build.sh
+  post_build:
+    commands:
+      - ./buildspec_post_build_s3.sh
+      - ./buildspec_post_build_partition.sh

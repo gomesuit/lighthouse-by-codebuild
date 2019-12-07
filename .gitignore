@@ -1,0 +1,3 @@
+.terraform
+docker-images
+codebuild_local.env
