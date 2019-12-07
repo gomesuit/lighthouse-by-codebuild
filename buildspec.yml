@@ -1,0 +1,12 @@
+---
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+    commands:
+      - npm i -g lighthouse
+  build:
+    commands:
+      - lighthouse --port=9222 --chrome-flags="--headless" https://example.com
