@@ -6,6 +6,7 @@ phases:
     runtime-versions:
       docker: 18
     commands:
+      - apt-get update
       - apt-get install -y language-pack-ja-base language-pack-ja
       - apt-get install -y fonts-ipafont-gothic fonts-ipafont-mincho
       - npm i -g lighthouse@5.6.0
